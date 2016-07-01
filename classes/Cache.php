@@ -7,7 +7,8 @@ class Cache {
                                    'Cache_APC',
                                    'Cache_SHM',
                                    'Cache_Memcache',
-                                   'Cache_Memcached'
+                                   'Cache_Memcached',
+                                   'Cache_Redis'
                                   );
 
     public static function &get($key = null) {
