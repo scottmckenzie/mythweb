@@ -3,11 +3,13 @@
 class Cache_Redis implements Cache_Engine {
 
     private $Redis = null;
+    private $prefix = 'mythweb:';
 
     public function __construct() {
         $this->Redis = new Redis();
         $this->Redis->connect('127.0.0.1');
-	$this->Redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_PHP);
+        $this->Redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_PHP);
+        $this->Redis->setOption(Redis::OPT_PREFIX, $this->prefix);
     }
 
     public function __destruct() {
@@ -34,7 +36,8 @@ class Cache_Redis implements Cache_Engine {
     }
 
     public function clear() {
-        return $this->Redis->flushDb();
+        $mythwebKeys = $this->$Redis->keys($this->prefix.'*');
+        return $this->Redis->delete($mythwebKeys);
     }
 }
 
